@@ -1,0 +1,36 @@
+{
+  "name": "jeannie_reddit_clone",
+  "version": "1.0.0",
+  "description": "project from scratch",
+  "main": "server.js",
+  "scripts": {
+    "test": "NODE_ENV=test mocha",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JeannieYamakawa/jeannie_reddit_clone.git"
+  },
+  "author": "Jeannie Yamakawa <jkyamakawa@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JeannieYamakawa/jeannie_reddit_clone/issues"
+  },
+  "homepage": "https://github.com/JeannieYamakawa/jeannie_reddit_clone#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "chai": "^3.5.0",
+    "ejs": "^2.5.2",
+    "express": "^4.14.0",
+    "knex": "^0.12.1",
+    "mocha": "^3.0.2",
+    "pg": "^6.1.0",
+    "supertest": "^2.0.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {
+    "mocha": "^3.0.2"
+  }
+}
