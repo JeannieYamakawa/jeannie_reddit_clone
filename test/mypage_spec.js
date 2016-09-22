@@ -2,8 +2,8 @@ var app = require('../server');
 var request = require('supertest');
 var mocha = require('mocha');
 var expect = require('chai').expect;
-
-
+var config = require('.knexfile')['test']
+var knex = require('knex')(config);
 
 
 describe('GET /', function() {

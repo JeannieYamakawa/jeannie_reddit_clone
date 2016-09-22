@@ -3,9 +3,10 @@ var express = require('express');
 var app = express();
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
-var knex = require('knex');
+var config = require('.knexfile')[process.end.NODE_ENV]
+var knex = require('knex')(config);
 
-// app.set("view engine", "ejs");
+app.set("view engine", "ejs");
 // app.use(express.static(__dirname + "/public"));
 // app.use(morgan("tiny"));
 // app.use(bodyParser.urlencoded({extended:true}));
