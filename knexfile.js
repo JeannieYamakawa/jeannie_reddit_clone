@@ -5,7 +5,7 @@ module.exports = {
     test: {
       client: 'pg',
       connection: {
-          host:"localhost",
+          host:'localhost',
         database: 'reddit_clone_test'
       }
     },
@@ -13,11 +13,11 @@ module.exports = {
   development: {
     client: 'pg',
     connection: {
-        host: "localhost",
+        host: 'localhost',
       database: 'reddit_clone_development'
     }
   },
-  // 
+  //
   // staging: {
   //   client: 'postgresql',
   //   connection: {
