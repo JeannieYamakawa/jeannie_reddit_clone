@@ -1,5 +1,4 @@
 var port = process.env.PORT || 3000;
-// var port = process.env.NODE_ENV || 3000;
 var express = require('express');
 var app = express();
 var morgan = require('morgan');
@@ -7,16 +6,10 @@ var bodyParser = require('body-parser');
 var knex = require('./db/knex');
 var ejs = require('ejs');
 
-
-
 app.set("view engine", "ejs");
 // app.use(express.static(__dirname + "/public"));
 app.use(morgan("tiny"));
 app.use(bodyParser.urlencoded({extended:true}));
-
-//
-
-
 
 
 // “/” is the static about or home page (POST USERS)
@@ -35,9 +28,6 @@ app.post('/users/new', function(req, res) {
 
 
 });
-//
-//
-// // “/users” (lists all users with delete/edit functionality GET USERS….PUT USERS...DELETE USERS)
 
 app.get('/users/new', function(req, res) {
     knex('users').then(function(data){

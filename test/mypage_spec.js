@@ -18,6 +18,15 @@ describe('myReddit', function(){
 
 
 describe('POST /users/new',function() {
+    before(function(done){
+        knex('comments').del().then(function(err){
+            knex('posts').del().then(function(err){
+                knex('users').del().then(function(err){
+                    done();
+                })
+            })
+        })
+    })
   it('should post new user to database', function(done) {
     request(app)
       .get('/users/new')

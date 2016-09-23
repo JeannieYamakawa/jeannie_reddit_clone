@@ -7,7 +7,7 @@ $(document).ready(function(){
     $.ajax( {
             url: 'http://localhost:3000/users/new', //where request is going to
             method: POST,
-            data: { username: $username}
+            // data: {username: $username}
 
         } ).done( function( data ) {
 
