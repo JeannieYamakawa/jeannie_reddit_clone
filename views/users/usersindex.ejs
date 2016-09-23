@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+</head>
+<body>
+<h1>Reddit: These are your users!</h1>
+
+    <% username.forEach(function(name){%>
+        <h4>  <%= name.username %> </h4>
+    <%})%>
+
+
+    <button type = 'submit' formmethod = 'GET' formaction= 'posts/postsindex' >Go Back to All Posts</button>
+
+
+
+
+  </body>
+</html>

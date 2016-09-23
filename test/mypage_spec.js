@@ -5,16 +5,7 @@ var expect = require('chai').expect;
 var knex = require('../db/knex');
 
 describe('myReddit', function(){
-// describe('GET /', function() {
-//   it('should redirect to list of users page', function(done) {
-//     request(app)
-//       .get('/')
-//       .end(function(err,res){
-//           expect(res.text).to.equal('send is working')
-//           done()
-//       })
-//   });
-// });
+
 
 
 describe('POST /users/new',function() {
@@ -61,8 +52,10 @@ describe('GET /users', function() {
       })
       it('should display all users', function(done) {
         //   add a user to table
-         knex('users').insert({"username": 'JeanBob'}).then(function(err) {
-            // if(err) console.error(err, "this is the error")
+         knex('users').insert({"username":'JeanBob'}).then(function(err) {
+            // if(err) {
+            //     console.error(err, "this is the error")
+            // }
             // else
             //make sure new user is on page
             request(app).get('/users')
@@ -76,7 +69,16 @@ describe('GET /users', function() {
 
 
 
-//
+//// describe('GET /', function() {
+//   it('should redirect to list of users page', function(done) {
+//     request(app)
+//       .get('/')
+//       .end(function(err,res){
+//           expect(res.text).to.equal('send is working')
+//           done()
+//       })
+//   });
+// });
 //
 //
 //
