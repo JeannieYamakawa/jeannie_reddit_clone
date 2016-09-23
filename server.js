@@ -42,12 +42,33 @@ app.get('/posts', function(req,res){
     res.render('posts/postsindex', {myPosts:data})
     })
 })
-//posts is the homepage, so / goes to /posts
+//posts is the homepage, so / also goes to /posts
 app.get('/', function(req,res){
     knex('posts').then(function(data){
     res.render('posts/postsindex', {myPosts:data})
     })
 })
+
+//display a specific post
+app.get('/posts/:id', function(req,res){
+    var postTitle = req.params.id
+    knex('posts').where('id','=', postTitle).then(function(data){
+        var title = data.title
+        res.render('posts/postsshow', {title:title})
+    //res.send(data)
+})
+})
+
+//display all comments for a specific post
+app.get('/posts/:id/comments', function(req,res){
+    var postTitle = req.params.id
+    knex('posts').where('id','=', postTitle).innerJoin('comments', 'comments.post_id', 'posts.id').then(function(data){
+    res.render('posts/show', {myPosts:data})
+})
+})
+
+
+
 
 app.post('/posts', function(req,res){
     var postTitle = req.body;

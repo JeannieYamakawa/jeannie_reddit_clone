@@ -10,8 +10,8 @@
 
 
 
-<% dataFromRoute.forEach(function(number){ %>
-	<h3> <%= number %> </h3>
+<% dataFromRoute.forEach(function(post){ %>
+	<h3> <%= post %> </h3>
 
 <% }) %>
 
@@ -19,7 +19,9 @@
 
 <form method="POST" action="/users">
 	<label for="textInput"> Enter your new username! </label>
+    <br>
 	<input id = 'textInput' type="text" name='username'>
+    <br>
 	<input id = 'submitButton' type="submit">
 
 </form>
