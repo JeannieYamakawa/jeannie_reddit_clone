@@ -53,9 +53,9 @@ app.get('/', function(req,res){
 app.get('/posts/:id', function(req,res){
     var postTitle = req.params.id
     knex('posts').where('id','=', postTitle).then(function(data){
-        var title = data.title
-        res.render('posts/postsshow', {title:title})
-    //res.send(data)
+        var myPost = data[0];
+        res.render('posts/postsshow', {myPost:myPost})
+    // res.send(data)
 })
 })
 
