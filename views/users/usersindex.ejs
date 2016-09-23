@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>users index</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <body>
 
-</head>
-<body>
+
+
 <h1>Reddit: These are your users!</h1>
 
     <% username.forEach(function(name){%>
@@ -15,7 +20,7 @@
     <%})%>
 
 
-    <button type = 'submit' formmethod = 'GET' formaction= 'posts/postsindex' >Go Back to All Posts</button>
+      <a href="posts" method= "GET" class="btn btn-info" role="button">go back to posts</a>
 
 
 

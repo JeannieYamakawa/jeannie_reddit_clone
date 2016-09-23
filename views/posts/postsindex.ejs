@@ -5,16 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <script   src="https://code.jquery.com/jquery-3.1.1.js"   integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA="   crossorigin="anonymous"></script>
-    <script type="text/javascript" src="app.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 
 
-    <% data.forEach(function(post){%>
-        <h4>  <%= post %> </h4>
-    <%})%>
 
+<% myPosts.forEach(function(post){%>
+    <h4>  <%= post.title %> </h4>
+     <a href="comments/new" method= "GET" class="btn btn-info" role="button">make a comment on this post</a>
+
+<%})%>
+
+
+  <a href="posts/new" method= "GET" class="btn btn-info" role="button">make a new post</a>
+
+
+   <a href="posts/new" method= "GET" class="btn btn-info" role="button">make a comment on a post</a>
 
   </body>
 </html>

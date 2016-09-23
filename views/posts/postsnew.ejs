@@ -9,17 +9,18 @@
 <body>
 
 
+<form method="POST" action="/posts">
+    <label for="userNameField"> Enter your username: </label>
+    <input id = 'userNameField' type="text" name='username'>
 
-<% dataFromRoute.forEach(function(number){ %>
-	<h3> <%= number %> </h3>
-
-<% }) %>
+	<label for="textInput"> Enter your post: </label>
+	<input id = 'textInput' type="text" name='title'>
 
 
+    <label for="contentLinkField"> Enter the link for your post: </label>
+	<input id = 'contentLinkField' type="text" name='content_link'>
 
-<form method="POST" action="/users">
-	<label for="textInput"> Enter your new username! </label>
-	<input id = 'textInput' type="text" name='username'>
+
 	<input id = 'submitButton' type="submit">
 
 </form>

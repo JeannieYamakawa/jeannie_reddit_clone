@@ -27,7 +27,6 @@ app.get('/users', function(req,res){
 
 app.post('/users', function(req, res) {
     //'should post new user to users table on database
-
     var newUsersName = req.body  // (make sure you have body parser)
     // insert new user from req.body in to db
     knex('users').insert(newUsersName).then(function(err){
@@ -38,8 +37,22 @@ app.post('/users', function(req, res) {
 
 app.get('/posts', function(req,res){
     knex('posts').then(function(data){
-    res.render('posts/postsindex', data)
+    res.render('posts/postsindex', {myPosts:data})
 })
+
+})
+
+app.post('/posts', function(req,res){
+    var postTitle = req.body;
+    knex('posts').insert(postTitle).then(function(err){
+        res.redirect('/posts')
+    })
+})
+
+app.get('/posts/new', function(req, res) {
+    // 'displays all posts'
+    res.render('posts/postsnew')
+
 })
 
 
