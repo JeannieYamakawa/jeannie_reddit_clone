@@ -56,7 +56,7 @@ app.get('/posts/:id', function(req,res){
         var myPost = data[0];
         res.render('posts/postsshow', {myPost:myPost})
     // res.send(data)
-})
+    })
 })
 
 //display all comments for a specific post
@@ -68,7 +68,12 @@ app.get('/posts/:id/comments', function(req,res){
 })
 
 
-
+app.get('/comments/new', function(req,res){
+    knex('comments').then(function(data){
+        // res.render('posts/postsshow', {myPost:myPost})
+    res.send(data)
+    })
+})
 
 app.post('/posts', function(req,res){
     var postTitle = req.body;
