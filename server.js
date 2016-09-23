@@ -11,14 +11,16 @@ app.set("view engine", "ejs"); //by default is looking for a folder called views
 app.use(morgan("tiny"));
 app.use(bodyParser.urlencoded({extended:true}));
 
+//USE METHOD OVERRIDE TO DELETE OR SEND AJAX REQUEST TO DELETE
 
-//if user sends a get request to this route, do this thing.
+//the line below says if user sends a get request to this path, do this thing.
 app.get('/users/new', function(req, res) {
     // 'displays sign up form'
     res.render('users/usersnew');
 })
 
 app.get('/users', function(req,res){
+    //displays all users
     knex('users').then(function(data){
         var myUsers = JSON.stringify(data)
         res.render('users/usersindex', {username: data})
@@ -26,20 +28,25 @@ app.get('/users', function(req,res){
 })
 
 app.post('/users', function(req, res) {
-    //'should post new user to users table on database
-    var newUsersName = req.body  // (make sure you have body parser)
+    //should post new user to users table on database
+    var newUsersName = req.body;  // (make sure you have body parser)
     // insert new user from req.body in to db
     knex('users').insert(newUsersName).then(function(err){
         // redirect to index page
         res.redirect('/users')
-    }) // check docs
+    })
 });
 
 app.get('/posts', function(req,res){
     knex('posts').then(function(data){
     res.render('posts/postsindex', {myPosts:data})
+    })
 })
-
+//posts is the homepage, so / goes to /posts
+app.get('/', function(req,res){
+    knex('posts').then(function(data){
+    res.render('posts/postsindex', {myPosts:data})
+    })
 })
 
 app.post('/posts', function(req,res){
@@ -52,8 +59,44 @@ app.post('/posts', function(req,res){
 app.get('/posts/new', function(req, res) {
     // 'displays all posts'
     res.render('posts/postsnew')
-
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 app.listen(port, function(){
