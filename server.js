@@ -67,14 +67,18 @@ app.get('/posts/:id/comments', function(req,res){
 })
 })
 
-
+//** displays form to comment on a specified post
 app.get('/comments/new', function(req,res){
-    knex('comments').then(function(data){
-        // res.render('posts/postsshow', {myPost:myPost})
+    var postTitle = req.body;
+    console.log(postTitle)
+        knex('posts').where('id','=', postTitle).then(function(data){
+            console.log(data, "this is the posts data")
+        // res.render('comments/commentsnew', {myPosts:data})
     res.send(data)
     })
 })
 
+//post to posts column in database from form on posts/new page
 app.post('/posts', function(req,res){
     var postTitle = req.body;
     knex('posts').insert(postTitle).then(function(err){

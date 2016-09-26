@@ -10,15 +10,10 @@
 
 
 
-<% dataFromRoute.forEach(function(post){ %>
-	<h3> <%= post %> </h3>
-
-<% }) %>
 
 
-
-<form method="POST" action="/users">
-	<label for="textInput"> Enter your new username! </label>
+<form method="POST" action="/posts">
+	<label for="textInput"> Enter your comment for this post! </label>
     <br>
 	<input id = 'textInput' type="text" name='username'>
     <br>
