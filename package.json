@@ -33,6 +33,7 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "knex": "^0.12.1",
+    "method-override": "^2.3.6",
     "mocha": "^3.0.2",
     "morgan": "^1.7.0",
     "supertest": "^2.0.0"
