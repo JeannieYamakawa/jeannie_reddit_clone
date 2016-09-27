@@ -14,13 +14,18 @@
 
 
 <h1>Reddit: These are your users!</h1>
+    <a href="posts/new" method= "GET" class="btn btn-info" role="button">make a new post</a>
 
     <% username.forEach(function(name){%>
         <h4>  <%= name.username %> </h4>
+        <form method="POST" action="/users/<%=name.username%>?_method=DELETE" >
+          <button class="btn btn-info" type="submit">Delete user</button>
+        </form>
     <%})%>
 
 
-      <a href="posts" class="btn btn-info" role="button">go back to posts</a>
+
+
 
 
 

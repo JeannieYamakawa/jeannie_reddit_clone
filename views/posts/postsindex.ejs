@@ -11,14 +11,20 @@
 </head>
 <body>
 
-<h1>Here are all the posts!</h1>
+<h1>Welcome to Reddit! </h1>
+    <br>
+    <a href="users/new" method= "GET" class="btn btn-info" role="button">create your username!</a>
+<hr>
+    <h2>Here are all the posts!</h2>
 
   <a href="posts/new" method= "GET" class="btn btn-info" role="button">make a new post</a>
 
 
 <br>
-<hr>
+<br>
+<br>
 
+<%console.log(myPosts)%>
 
 <% if(typeof myError !== "undefined" && myError) {%>
     <h3> <%= myError %></h3>
@@ -26,17 +32,28 @@
 
 
 <% if(typeof myPosts !== "undefined") {
-     myPosts.forEach(function(post){%>
+
+     myPosts.forEach(function(post){
+         %>
     <h4>  <%= post.title %> </h4>
-    <h4 > <a href= "<%=post.content_link%>" >  <%= post.content_link %>  </a> </h4>
+    <h4 > <a href= "http://<%=post.content_link%>" >  <%= post.content_link %>  </a> </h4>
      <a href="comments/new" method= "GET" class="btn btn-info" role="button">make a comment on this post</a>
 
-     <form method="POST" action="/resource" >
-       <input type="hidden" name="_method" value="DELETE">
+
+     <form method="POST" action="/posts/<%=post.id%>?_method=DELETE" >
        <button class="btn btn-info" type="submit">Delete post</button>
      </form>
 
-     <form method="POST" action="/resource" >
+<!-- <form method="POST" action = '/?_method=DELETE'>
+    <button type = 'submit'>click me! </button>
+</form> -->
+<!--
+ <form method="POST" action="/posts/<%=post.ids%>?_method=DELETE">
+  <button type="submit">Delete post</button>
+</form> -->
+
+
+     <form method="POST" action="/posts/<%=post.id%>" >
        <input type="hidden" name="_method" value="PUT">
        <button class="btn btn-info" type="submit">Edit post</button>
      </form>
