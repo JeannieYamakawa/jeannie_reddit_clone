@@ -8,24 +8,22 @@ var ejs = require('ejs');
 var methodOverride = require('method-override')
 
 
-app.set("view engine", "ejs"); //by default is looking for a folder called /views/
+app.set("view engine", "ejs"); //by default is looking for /views/
+//  one single / before path means "start from server root"
 // app.use(express.static(__dirname + "/public"));
 app.use(morgan("tiny"));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(methodOverride('_method'))
 
-//  one single / before path means "start from server root"
-//USE METHOD OVERRIDE TO DELETE OR SEND AJAX REQUEST TO DELETE
-
 ////////////////////////////////////////////////////////////////////////////////////
-//posts is the homepage, so / also goes to /posts
+//posts is the homepage, so it also goes to /posts
 app.get('/', function(req,res){
     knex('posts').then(function(data){
     res.render('posts/postsindex', {myPosts:data})
     })
 })
 
-//the line below says if user sends a get request to this path, do this thing.
+//the line below says if user sends a GET request to this path, do this thing.
 app.get('/users/new', function(req, res) {
     // 'displays sign up form'
     res.render('users/usersnew');
@@ -40,43 +38,32 @@ app.get('/users', function(req,res){
     })
 })
 
-app.post('/users', function(req, res) {
-    //should post new user to users table on database
-    var newUsersName = req.body;  // (make sure you have body parser)
-    // insert new user from req.body in to db
-    knex('users').insert(newUsersName).then(function(err){
-        // redirect to index page
-        res.redirect('/users')
-    })
-});
-
-
-
 app.delete('/users/:username', function(req,res) {
-    console.log(req.params.username, "****req.params.username")
-knex('comments').where('by_username', req.params.username).del()
-    .then(function(err){
-knex('posts').where('username', req.params.username).del()
-    })
-    .then(function(err){
-knex('users').where('username', req.params.username).del()
-    })
-    .then(function(err){
-res.redirect('/users')
-    // res.send("HEYO!")
-})
+    var userToDelete = req.params.username;
+    knex('comments').where('by_username', userToDelete).del()
+    .then(knex('posts').where('username', userToDelete).del()
+    .then(knex('users').where('username', userToDelete).del()
+    .then(function(){
+        res.redirect('/users')
+        })
+        )
+    )
 });
-
-
 
 app.delete('/posts/:id', function(req,res) {
-    console.log(req.params.id, "****req.params.id")
-knex('posts').where('id', req.params.id).del()
-    .then(function(){
-res.redirect('/posts')
-    // res.send("HEYO!")
-})
+    var postToDelete = req.params.id;
+    knex('comments').where('post_id', postToDelete).del()
+        .then(knex('posts').where('id', postToDelete).del()
+        .then(function(){
+            res.redirect('/posts')
+        })
+        )
 });
+
+app.delete('posts/:id/comments/:id', function(){
+
+
+})
 
 
 
@@ -86,32 +73,28 @@ res.redirect('/posts')
 //display all posts
 app.get('/posts', function(req,res){
     knex('posts').then(function(data){
-        console.log(data);
+        // console.log(data);
     res.render('posts/postsindex', {myPosts:data})
     })
 })
 
-    // 'displays all posts
 app.get('/posts/new', function(req, res) {
     res.render('posts/postsnew')
 })
 
-//post to posts column in database from form on posts/new page
+//posts to posts table in db from form on posts/new page
 app.post('/posts', function(req,res){
     var wholePost = req.body;
     var username = req.body.username;
-    console.log(username, "***line 76 username")
     var arrayOfUsers = [];
     knex('users').then(function(data){
-        console.log(data, "***line79 data")
     data.forEach(function(item){
         arrayOfUsers.push(item.username)
     })
     if (arrayOfUsers.indexOf(username)== -1){
-        res.render('posts/postsindex', {myError: "This user does not exist."})
+        res.render('posts/postsindex', {myError: "Error: This user does not exist. Please create a username or make a post as one of the existing users below.", myUsers: arrayOfUsers})
     }
     else{
-        console.log(wholePost.content_link)
         if(wholePost.content_link.indexOf("http")==-1){
             wholePost.content_link = "http://" + wholePost.content_link;
             if(wholePost.content_link.indexOf(".com")==-1){
@@ -125,32 +108,13 @@ app.post('/posts', function(req,res){
     })
 })
 
-
-
-
-// app.use(methodOverride(function(req, res){
-//   if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-//     console.log(req.body, "req.body")
-//     var method = req.body._method
-//     delete req.body._method
-//     console.log(method, "**** method");
-//     return method
-//   }
-// }))
-
-app.delete('/posts/:id', function(req,res) {
-    console.log(req.params.id, "****req.params.id")
-knex('posts').where('id', req.params.id).del()
-    .then(function(){
-res.redirect('/posts')
-    // res.send("HEYO!")
-})
+// posts new user to users table on database
+app.post('/users', function(req, res) {
+    var newUsersName = req.body;  // (make sure you have body parser)
+    knex('users').insert(newUsersName).then(function(err){
+        res.redirect('/users')
+    })
 });
-
-//SAMPLE DELETE ROUTE
-// app.delete('/', function(req,res){
-//     res.send("heeeeyyy!")
-// })
 
 //display a specific post
 app.get('/posts/:id', function(req,res){
@@ -161,26 +125,75 @@ app.get('/posts/:id', function(req,res){
     // res.send(data)
     })
 })
+
+
+
+
+
+
+//
+// knex.from('users').innerJoin('accounts', 'users.id', 'accounts.user_id')
+// Outputs:
+// select * from "users" inner join "accounts" on "users"."id" = "accounts"."user_id"
+// knex.table('users').innerJoin('accounts', 'users.id', '=', 'accounts.user_id')
+// Outputs:
+// select * from "users" inner join "accounts" on "users"."id" = "accounts"."user_id"
+// knex('users').innerJoin('accounts', function() {
+//   this.on('accounts.id', '=', 'users.account_id').orOn('accounts.owner_id', '=', 'users.id')
+// })
+// Outputs:
+// select * from "users" inner join "accounts" on "accounts"."id" = "users"."account_id" or "accounts"."owner_id" = "users"."id"
+
+
+
 //display all comments for a specific post
 app.get('/posts/:id/comments', function(req,res){
-    var postTitle = req.params.id
-    knex('posts').where('id','=', postTitle).innerJoin('comments', 'comments.post_id', 'posts.id').then(function(data){
-    res.render('posts/show', {myPosts:data})
+    var postId = req.params.id;
+    knex('posts').innerJoin('comments', 'posts.id', 'comments.post_id').then(function(data){
+        // var myComments = JSON.stringify(data);
+        var specificPostComments = [];
+        for (var i = 0; i < data.length; i++){
+            if(data[i].post_id == postId){
+                specificPostComments.push(data[i])
+            }
+        }
+        // specificPostComments = JSON.stringify(specificPostComments)
+        console.log(specificPostComments, "all comments matching")
+
+    res.render('comments/commentsedit', {myPostComments: specificPostComments})
+// res.send(specificPostComments)
 })
 })
 
 
 ////////////////////////////////////////////////////////////////////////////////////
-//** displays form to comment on a specified post
-app.get('/comments/new', function(req,res){
-    var postTitle = req.body;
-    console.log(postTitle)
-        knex('posts').where('id','=', postTitle).then(function(data){
-            console.log(data, "this is the posts data")
-        // res.render('comments/commentsnew', {myPosts:data})
-    res.send(data)
+// displays a specific post and form to comment on that post
+app.get('/posts/:id/comments/new', function(req,res){
+    var postId = req.params.id;
+    console.log(postId, "***postTitle")
+        knex('comments').where('post_id', postId).then(function(data){
+        res.render('comments/commentsnew', {myPosts:data})
+    // res.send(data)
     })
 })
+
+// posts new COMMENT to specific post in POSTS table, info from form on posts/show/:id page
+app.post('/posts/:id', function(req, res){
+    var wholeComment = req.body;
+    var iD = req.body.post_id;
+    console.log(wholeComment)
+    var postId = req.params.id;
+    knex('comments').where('post_id', postId)
+    .insert(wholeComment).then(function(){
+        res.redirect('/posts/'+iD+'/comments')
+    })
+})
+
+
+
+
+
+
 
 
 

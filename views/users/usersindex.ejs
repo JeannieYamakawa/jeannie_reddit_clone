@@ -12,17 +12,34 @@
   <body>
 
 
+<h1>Welcome to Reddit! </h1>
+<h3>These are your users:</h3>
+<form method="POST" action="/users">
+    <label for="textInput"> Add a new user! </label>
+    <input id = 'textInput' type="text" name='username'>
+    <input class = 'btn btn-info' id = 'submitButton' type="submit">
 
-<h1>Reddit: These are your users!</h1>
-    <a href="posts/new" method= "GET" class="btn btn-info" role="button">make a new post</a>
+</form>
+
+
+
+<br>
+<br>
 
     <% username.forEach(function(name){%>
         <h4>  <%= name.username %> </h4>
         <form method="POST" action="/users/<%=name.username%>?_method=DELETE" >
           <button class="btn btn-info" type="submit">Delete user</button>
         </form>
+        <br>
     <%})%>
 
+
+    <br>
+    <br>
+    <a href="posts/new" method= "GET" class="btn btn-info" role="button">make a new post</a>
+    <br>
+    <br>
 
 
 

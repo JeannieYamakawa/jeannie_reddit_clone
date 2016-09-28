@@ -5,19 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Add a new user.</title>
-</head>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
 <body>
 
+<h1>Welcome to Reddit! </h1>
 
-
-<h3>Reddit: add a new user</h3>
+<h3>Add a new user</h3>
 
 
 
 <form method="POST" action="/users">
 	<label for="textInput"> Enter your new username! </label>
 	<input id = 'textInput' type="text" name='username'>
-	<input id = 'submitButton' type="submit">
+	<input class = 'btn btn-info' id = 'submitButton' type="submit">
 
 </form>
 

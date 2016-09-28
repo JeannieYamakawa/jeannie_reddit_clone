@@ -14,30 +14,29 @@
 <h1>Welcome to Reddit! </h1>
     <br>
     <a href="users/new" method= "GET" class="btn btn-info" role="button">create your username!</a>
+      <a href="posts/new" method= "GET" class="btn btn-info" role="button">make a new post</a>
 <hr>
-    <h2>Here are all the posts!</h2>
-
-  <a href="posts/new" method= "GET" class="btn btn-info" role="button">make a new post</a>
-
-
-<br>
-<br>
-<br>
-
-<%console.log(myPosts)%>
 
 <% if(typeof myError !== "undefined" && myError) {%>
     <h3> <%= myError %></h3>
+    <br>
+    <% myUsers.forEach(function(name){%>
+        <h4>  <%= name %> </h4>
+        <br>
+    <%})%>
+
+
+
     <%}%>
 
 
-<% if(typeof myPosts !== "undefined") {
-
-     myPosts.forEach(function(post){
+<% if(typeof myPosts !== "undefined" && myPosts) { %>
+<h2>Here are all the posts!</h2>
+    <% myPosts.forEach(function(post){
          %>
     <h4>  <%= post.title %> </h4>
     <h4 > <a href= "http://<%=post.content_link%>" >  <%= post.content_link %>  </a> </h4>
-     <a href="comments/new" method= "GET" class="btn btn-info" role="button">make a comment on this post</a>
+     <a href="posts/<%=post.id%>/comments/new" method= "GET" class="btn btn-info" role="button">Comment</a>
 
 
      <form method="POST" action="/posts/<%=post.id%>?_method=DELETE" >

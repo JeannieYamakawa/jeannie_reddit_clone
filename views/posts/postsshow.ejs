@@ -5,21 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-
-
     <h1>Reddit: This is your post!</h1>
 
+    <%if (myPost && typeof myPost !== "undefined") {%>
 
         <h4>  <%= myPost.title %> </h4>
-        <h4>  <%= myPost.content_link %> </h4>
+        <h4>  <a href = '<%= myPost.content_link %>' > <%= myPost.content_link %> </a></h4>
+        <form method="POST" action="/posts/<%=myPost.id%>">
+        	<label for="textInput"> Enter your comment for this post! </label>
+            <br>
+        	<input id = 'textInput' type="text" name='comment_text'>
+            <br>
+            <label for="textInput"> Your username: </label>
+            <br>
+        	<input id = 'textInput' type="text" name='by_username'>
+            <br>
+            <input type="text" style = 'display:none' name='post_id' value = '<%=myPost.id%>' >
+        	<input class = 'btn btn-info' id = 'submitButton' type="submit">
+        </form>
 
 
         <a href="/" class="btn btn-info" role="button">go back to posts</a>
-
-
+    <%} else {%>
+    <h4>Error: This post does not exist.</h4>
+    <%}%>
 
 
 </body>

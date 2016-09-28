@@ -5,8 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+<h1>Welcome to Reddit!</h1>
+
+
+<a href="/" class="btn btn-info" role="button">go back to all posts</a>
+
+
+<%if (myPostComments && typeof myPostComments !== "undefined") {%>
+    <h2>These are the comments for your post.</h2>
+
+    <h3><%=myPostComments[0].title%></h3>
+    <h4>
+         <a href = '<%= myPostComments[0].content_link %>' > <%= myPostComments[0].content_link %> </a>
+     </h4>
+<br>
+    <% myPostComments.forEach(function(comment){%>
+        <h5>  <%= comment.comment_text %> </h5>
+        <form method="POST" action="/posts/<%=myPostComments.id%>?_method=DELETE" >
+          <button class="btn btn-info" type="submit">Delete comment</button>
+        </form>
+        <br>
+    <%})%>
+
+
+
+<%} else {%>
+<h4>Error: No comments exist for this post.</h4>
+<%}%>
+
+
+
+
+
 
 </body>
 </html>
