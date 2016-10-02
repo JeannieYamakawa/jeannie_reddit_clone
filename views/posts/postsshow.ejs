@@ -17,6 +17,13 @@
 
         <h4>  <%= myPost.title %> </h4>
         <h4>  <a href = '<%= myPost.content_link %>' > <%= myPost.content_link %> </a></h4>
+
+        <!-- <form method="GET" action="/posts/<%=myPost.id%>">
+            <label for="button"> Edit this post </label>
+            <br>
+            <input id = 'button' class = 'btn btn-info' type="submit" >
+        </form> -->
+
         <form method="POST" action="/posts/<%=myPost.id%>">
         	<label for="textInput"> Enter your comment for this post! </label>
             <br>

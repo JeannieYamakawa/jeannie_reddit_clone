@@ -133,6 +133,15 @@ app.delete('/posts/:id', function(req,res) {
 });
 
 
+//EDIT POSTS
+app.get('/posts/:id/edit', function(req, res){
+    var postToEdit = req.params.id;
+    knex('posts').where('id','=', postToEdit).then(function(data){
+        var myPost = data[0];
+        res.render("posts/postsedit", {myPost:myPost})
+    // res.send(data)
+    })
+})
 
 
 
@@ -148,7 +157,8 @@ app.get('/posts/:id/comments/new', function(req,res){
     var postId = req.params.id;
     console.log(postId, "***postTitle")
         knex('comments').where('post_id', postId).then(function(data){
-        res.render('comments/commentsnew', {myPosts:data})
+            var myPosts = JSON.stringify(data)
+        res.redirect('posts/'+ postId, {myPosts:myPosts})
     // res.send(data)
     })
 })
@@ -191,9 +201,22 @@ app.delete('/posts/:id/comments/:iD', function(req,res){
     .then(function(){
         res.redirect('/posts/'+postId+'/comments')
     })
-    // res.send("comments delete is working")
 })
 
+
+
+app.put('/posts/:id', function(req,res){
+    var postId = req.params.id;
+    console.log(postId, "***postId")
+    var contentLink = req.body.content_link;
+    var postTitle = req.body.title;
+    console.log(postTitle)
+    knex('posts').where('id', req.body.id).update({content_link: contentLink, title: postTitle}).then(
+        function(){
+            res.redirect('/posts/'+ postId)
+        }
+    )
+})
 
 
 

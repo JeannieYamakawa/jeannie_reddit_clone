@@ -5,8 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+
+
+
+    <h1>Reddit: Edit this post!</h1>
+<br>
+    <%if (myPost && typeof myPost !== "undefined") {%>
+
+
+        <form method="POST" action="/posts/<%=myPost.id%>?_method=PUT%>">
+            <input type="text" style = 'display: none' value = '<%=myPost.id%>' name = 'id'>
+        <label for="post_title">Post title: </label>
+        <input id = 'post_title' type="text" value = '<%= myPost.title %>' name = 'title'>
+        <br>
+        <br>
+        <label for="content_link">Content link: </label>
+        <input id = 'content_link'type="text" value = '<%= myPost.content_link %>' name = 'content_link' >
+
+            <br>
+            <br>
+            <input id = 'button' class = 'btn btn-info' type="submit" value = 'submit changes to post'>
+        </form>
+
+
+<br>
+<br>
+
+        <a href="/" class="btn btn-info" role="button">go back to posts</a>
+    <%} else {%>
+    <h4>Error: This post does not exist.</h4>
+    <%}%>
+
+
 
 </body>
 </html>
