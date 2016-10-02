@@ -24,9 +24,10 @@
          <a href = '<%= myPostComments[0].content_link %>' > <%= myPostComments[0].content_link %> </a>
      </h4>
 <br>
+    <%var postNumber = myPostComments[0].post_id %>
     <% myPostComments.forEach(function(comment){%>
         <h5>  <%= comment.comment_text %> </h5>
-        <form method="POST" action="/posts/<%=myPostComments.id%>?_method=DELETE" >
+        <form method="POST" action="/posts/<%=postNumber%>/comments/<%=comment.id%>?_method=DELETE" >
           <button class="btn btn-info" type="submit">Delete comment</button>
         </form>
         <br>
