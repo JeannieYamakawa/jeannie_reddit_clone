@@ -111,8 +111,20 @@ app.post('/posts', function(req,res){
 // posts new user to users table on database
 app.post('/users', function(req, res) {
     var newUsersName = req.body;  // (make sure you have body parser)
-    knex('users').insert(newUsersName).then(function(err){
-        res.redirect('/users')
+    var arrayOfUsers = [];
+    knex('users').then(function(data){
+        console.log(data)
+        data.forEach(function(item){
+            arrayOfUsers.push(item.username) })
+            console.log(arrayOfUsers)
+            var newUser = newUsersName.username
+            if (arrayOfUsers.indexOf(newUser)){
+            knex('users').insert(newUsersName).then(function(err){
+                res.redirect('/users')
+            })
+        }else{
+            res.send("Error: This user already exists. Please go back and create a unique username.")
+        }
     })
 });
 
