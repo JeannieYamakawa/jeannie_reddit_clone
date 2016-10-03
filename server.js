@@ -59,13 +59,15 @@ app.post('/users', function(req, res) {
 app.delete('/users/:username', function(req,res) {
     var userToDelete = req.params.username;
     knex('comments').where('by_username', userToDelete).del()
-    .then(knex('posts').where('username', userToDelete).del()
-    .then(knex('users').where('username', userToDelete).del()
+    .then(function(){
+        return knex('posts').where('username', userToDelete).del()
+        })
+    .then(function(){
+        return knex('users').where('username', userToDelete).del()
+        })
     .then(function(){
         res.redirect('/users')
         })
-        )
-    )
 });
 
 

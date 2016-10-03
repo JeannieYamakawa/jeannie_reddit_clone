@@ -16,7 +16,7 @@
 <a href="/" class="btn btn-info" role="button">go back to all posts</a>
 
 
-<%if (myPostComments && typeof myPostComments !== "undefined") {%>
+<%if (myPostComments && typeof myPostComments[0] !== "undefined") {%>
     <h2>These are the comments for your post.</h2>
 
     <h3><%=myPostComments[0].title%></h3>
@@ -42,7 +42,7 @@
 
 
 <%} else {%>
-<h4>Error: No comments exist for this post.</h4>
+<h4>No comments exist for this post.</h4>
 <%}%>
 
 

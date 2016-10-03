@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>All posts</title>
+    <link rel="stylesheet" href="public/style.css">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -35,6 +36,7 @@
     <% myPosts.forEach(function(post){
          %>
     <h4>  <%= post.title %> </h4>
+    <h4> by: <%= post.username %></h4>
     <h4 > <a href= "http://<%=post.content_link%>" >  <%= post.content_link %>  </a> </h4>
 
     <form method="GET" action="/posts/<%=post.id%>/edit" >
@@ -45,14 +47,6 @@
      <form method="POST" action="/posts/<%=post.id%>?_method=DELETE" >
        <button class="btn btn-info" type="submit">Delete post</button>
      </form>
-
-<!-- <form method="POST" action = '/?_method=DELETE'>
-    <button type = 'submit'>click me! </button>
-</form> -->
-<!--
- <form method="POST" action="/posts/<%=post.ids%>?_method=DELETE">
-  <button type="submit">Delete post</button>
-</form> -->
 
 
      <form method="GET" action="/posts/<%=post.id%>" >
