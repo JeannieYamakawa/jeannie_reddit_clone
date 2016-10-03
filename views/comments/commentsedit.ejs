@@ -17,25 +17,21 @@
 
 
 <%if (myPostComments && typeof myPostComments !== "undefined") {%>
-    <h2>These are the comments for your post.</h2>
 
-    <h3><%=myPostComments[0].title%></h3>
-    <h4>
-         <a href = '<%= myPostComments[0].content_link %>' > <%= myPostComments[0].content_link %> </a>
-     </h4>
-<br>
-    <%var postNumber = myPostComments[0].post_id %>
-    <% myPostComments.forEach(function(comment){%>
-        <h5>  <%= comment.comment_text %> </h5>
-        <form method="POST" action="/posts/<%=postNumber%>/comments/<%=comment.id%>?_method=DELETE" >
-          <button class="btn btn-info" type="submit">Delete comment</button>
-        </form>
+
+    <form method="POST" action="/posts/<%=myPostComments.post_id%>/comments/<%=myPostComments.id%>?_method=PUT" >
+        <input type="text" style = 'display: none' value = '<%=myPostComments.id%>' name = 'id'>
+    <label for="comment_text">Comment: </label>
+    <input id = 'comment_text' type="text" value = '<%= myPostComments.comment_text %>' name = 'comment_text'>
+    <br>
         <br>
-    <%})%>
+        <input id = 'button' class = 'btn btn-info' type="submit" value = 'submit changes to comment'>
+    </form>
 
 
 
-<%} else {%>
+
+<% }else {%>
 <h4>Error: No comments exist for this post.</h4>
 <%}%>
 

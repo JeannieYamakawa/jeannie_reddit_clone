@@ -42,10 +42,8 @@ app.post('/users', function(req, res) {
     var newUsersName = req.body;  // (make sure you have body parser)
     var arrayOfUsers = [];
     knex('users').then(function(data){
-        console.log(data)
         data.forEach(function(item){
             arrayOfUsers.push(item.username) })
-            console.log(arrayOfUsers)
             var newUser = newUsersName.username
             if (arrayOfUsers.indexOf(newUser)){
             knex('users').insert(newUsersName).then(function(err){
@@ -106,7 +104,6 @@ app.post('/posts', function(req,res){
 //READ/display all posts
 app.get('/posts', function(req,res){
     knex('posts').then(function(data){
-        // console.log(data);
     res.render('posts/postsindex', {myPosts:data})
     })
 })
@@ -155,7 +152,6 @@ app.get('/posts/:id/edit', function(req, res){
 // CREATE comments; displays a specific post and form to comment on that post
 app.get('/posts/:id/comments/new', function(req,res){
     var postId = req.params.id;
-    console.log(postId, "***postTitle")
         knex('comments').where('post_id', postId).then(function(data){
             var myPosts = JSON.stringify(data)
         res.redirect('posts/'+ postId, {myPosts:myPosts})
@@ -167,7 +163,6 @@ app.get('/posts/:id/comments/new', function(req,res){
 app.post('/posts/:id', function(req, res){
     var wholeComment = req.body;
     var iD = req.body.post_id;
-    console.log(wholeComment)
     var postId = req.params.id;
     knex('comments').where('post_id', postId)
     .insert(wholeComment).then(function(){
@@ -187,8 +182,7 @@ app.get('/posts/:id/comments', function(req,res){
                 specificPostComments.push(data[i])
             }
         }
-        console.log(specificPostComments, "all comments matching")
-    res.render('comments/commentsedit', {myPostComments: specificPostComments})
+    res.render('comments/commentsindex', {myPostComments: specificPostComments})
 // res.send(specificPostComments)
 })
 })
@@ -207,10 +201,8 @@ app.delete('/posts/:id/comments/:iD', function(req,res){
 
 app.put('/posts/:id', function(req,res){
     var postId = req.params.id;
-    console.log(postId, "***postId")
     var contentLink = req.body.content_link;
     var postTitle = req.body.title;
-    console.log(postTitle)
     knex('posts').where('id', req.body.id).update({content_link: contentLink, title: postTitle}).then(
         function(){
             res.redirect('/posts/'+ postId)
@@ -218,6 +210,31 @@ app.put('/posts/:id', function(req,res){
     )
 })
 
+app.get('/posts/:id/comments/:iD', function(req, res){
+    var postId = req.params.id;
+    var commentId = req.params.iD
+    knex('comments').where({id: commentId, post_id: postId})
+    .then(function(data){
+        var myComment = data[0]
+        // res.send(myComment)
+        res.render('comments/commentsedit', {myPostComments: myComment})
+    })
+})
+
+
+
+
+app.put('/posts/:id/comments/:iD', function(req, res){
+    var postId = req.params.id;
+    var commentId = req.params.iD
+    var commentText = req.body.comment_text;
+    knex('comments').where({id: commentId, post_id: postId})
+    .update({comment_text: commentText}).then(
+        function(){
+            res.redirect('/posts/'+postId+"/comments")
+        }
+    )
+})
 
 
 
